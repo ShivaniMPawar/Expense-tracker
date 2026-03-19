@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-dark bg-dark px-4">
+    <span class="navbar-brand fw-bold">💰 Expense Tracker</span>
+  </nav>
+
+  <!-- MONTH FILTER BAR -->
+<div class="bg-white border-bottom px-4 py-2 d-flex align-items-center gap-3">
+  <span class="fw-bold text-secondary">Filter by month:</span>
+  <select id="month-filter" class="form-select w-auto" onchange="filterByMonth()">
+    <option value="all">All Expenses</option>
+    <option value="2026-01">January 2026</option>
+    <option value="2026-02">February 2026</option>
+    <option value="2026-03">March 2026</option>
+    <option value="2026-04">April 2026</option>
+    <option value="2026-05">May 2026</option>
+    <option value="2026-06">June 2026</option>
+    <option value="2026-07">July 2026</option>
+    <option value="2026-08">August 2026</option>
+    <option value="2026-09">September 2026</option>
+    <option value="2026-10">October 2026</option>
+    <option value="2026-11">November 2026</option>
+    <option value="2026-12">December 2026</option>
+  </select>
+  <span id="filter-count" class="text-muted small"></span>
+</div>
+
+  <div class="container mt-4">
+
+    <!-- TOTAL CARD -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card text-white bg-primary shadow">
+          <div class="card-body">
+            <h6 class="card-title">Total Spent</h6>
+            <h2 class="fw-bold" id="total-amount">₹0.00</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUDGET SECTION -->
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-header bg-dark text-white fw-bold">
+        Monthly Budget
+      </div>
+      <div class="card-body">
+
+        <!-- Budget input -->
+        <div class="d-flex gap-2 mb-3">
+          <input type="number" id="budget-input" class="form-control"
+                 placeholder="Set monthly budget e.g. 2000"/>
+          <button onclick="checkBudget()"
+                  class="btn btn-dark px-4">Set</button>
+        </div>
+
+        <!-- Progress bar -->
+        <div id="budget-section" style="display:none">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="small fw-bold">Spent: <span id="budget-spent">₹0</span></span>
+            <span class="small fw-bold">Limit: <span id="budget-limit">₹0</span></span>
+          </div>
+          <div class="progress mb-2" style="height:20px">
+            <div id="budget-bar" class="progress-bar" style="width:0%">0%</div>
+          </div>
+          <div id="budget-alert" class="alert mb-0" style="display:none"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="row">
+
+      <!-- ADD EXPENSE FORM -->
+      <div class="col-md-4">
+        <div class="card shadow mb-4">
+          <div class="card-header bg-dark text-white fw-bold">Add Expense</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" id="name" class="form-control" placeholder="e.g. Coffee"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Amount (₹)</label>
+              <input type="number" id="amount" class="form-control" placeholder="e.g. 50"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <select id="category" class="form-select">
+                <option>Food</option>
+                <option>Travel</option>
+                <option>Bills</option>
+                <option>Shopping</option>
+                <option>Entertainment</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Date</label>
+              <input type="date" id="date" class="form-control"/>
+            </div>
+            <button onclick="addExpense()" class="btn btn-primary w-100">Add Expense</button>
+            <div id="msg" class="mt-2 text-success fw-bold"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPENSE TABLE -->
+      <div class="col-md-8">
+        <div class="card shadow mb-4">
+          <div class="card-header bg-dark text-white fw-bold">All Expenses</div>
+          <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+              <thead class="table-secondary">
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="expense-table">
+                <tr><td colspan="6" class="text-center text-muted py-3">No expenses yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CHART -->
+        <div class="card shadow">
+          <div class="card-header bg-dark text-white fw-bold">Spending by Category</div>
+          <div class="card-body">
+            <canvas id="myChart" height="120"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/js/chart.js"></script>
+</body>
+</html>
